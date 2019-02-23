@@ -2,6 +2,7 @@
 item.gtveinlocator.veinLocator.name=GT Vein-Locator
 item.gtveinlocator.advancedVeinLocator.name=Advanced GT Vein-Locator
 item.gtveinlocator.eliteVeinLocator.name=Elite GT Vein-Locator
+item.gtveinlocator.eliteVeinLocator_IE.name=IE GT Vein-Locator
 
 #waypoint for journeymap
 waypoint.gtveinlocator.unknown.name=Unknown

@@ -2,6 +2,7 @@
 item.gtveinlocator.veinLocator.name=GT矿脉定位器
 item.gtveinlocator.advancedVeinLocator.name=高级GT矿脉定位器
 item.gtveinlocator.eliteVeinLocator.name=精英GT矿脉定位器
+item.gtveinlocator.eliteVeinLocator_IE.name=IE矿脉定位器
 
 #waypoint for journeymap
 waypoint.gtveinlocator.unknown.name=未知

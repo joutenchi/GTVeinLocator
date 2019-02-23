@@ -17,19 +17,22 @@ public class ClientWaypointPacketHandler implements IMessageHandler<ClientWaypoi
 
     @Override
     public IMessage onMessage(ClientWaypointPacket message, MessageContext ctx) {
-        if (LoadedModHelper.supportMod == null) 
+        if (LoadedModHelper.supportMod == null) {
             return null;
-        else if (!LoadedModHelper.failedCompat) {
-            int targetY = message.posY==-1? ModConfig.waypointYLevelEliteLocator: message.posY;
-            switch(LoadedModHelper.supportMod) {
-            case JOURNEYMAP:
-                if (!JourneyMapHelper.isWaypointExist(message.posX, message.posZ, message.dimId, true))
-                    JourneyMapHelper.addWaypoint(I18n.format(message.wpName), message.posX, targetY, message.posZ, message.dimId);        
-                break;
-            case XAEROMINIMAP:
-                if (!XaeroMinimapHelper.isWaypointExist(message.posX, message.posZ, true))
-                    XaeroMinimapHelper.addWaypoint(I18n.format(message.wpName), message.posX, targetY, message.posZ);
-                break;
+        } else if (!LoadedModHelper.failedCompat) {
+            int targetY = message.posY == -1 ? ModConfig.waypointYLevelEliteLocator : message.posY;
+            switch (LoadedModHelper.supportMod) {
+                case JOURNEYMAP:
+                    if (!JourneyMapHelper.isWaypointExist(message.posX, message.posZ, message.posY, message.dimId, true)) {
+                        JourneyMapHelper.addWaypoint(I18n.format(message.wpName), message.posX, targetY, message.posZ, message.dimId);
+                    }
+                    break;
+                case XAEROMINIMAP:
+                    if (!XaeroMinimapHelper.isWaypointExist(message.posX, message.posZ, true)) {
+                        System.out.print("添加路径点" + message.posX + " " + targetY + " " + message.posZ);
+                        XaeroMinimapHelper.addWaypoint(I18n.format(message.wpName), message.posX, targetY, message.posZ);
+                    }
+                    break;
             }
         }
         return null;

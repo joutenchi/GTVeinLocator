@@ -10,12 +10,14 @@ import pers.gwyog.gtveinlocator.compat.LoadedModHelper;
 import pers.gwyog.gtveinlocator.config.ModConfig;
 import pers.gwyog.gtveinlocator.items.ItemAdvancedVeinLocator;
 import pers.gwyog.gtveinlocator.items.ItemEliteVeinLocator;
+import pers.gwyog.gtveinlocator.items.ItemEliteVeinLocato_IE;
 import pers.gwyog.gtveinlocator.items.ItemVeinLocator;
 
 public class ModItems {
     public static Item itemVeinLocator;
     public static Item itemAdvancedVeinLocator;
     public static Item itemEliteVeinLocator;
+    public static Item itemEliteVeinLocator_IE;
     
     public static void init() {
         if (ModConfig.veinLocatorEnabled) {
@@ -30,6 +32,8 @@ public class ModItems {
             itemEliteVeinLocator = new ItemEliteVeinLocator("eliteVeinLocator", ModConfig.eliteVeinLocatorMaxCharge, ModConfig.eliteVeinLocatorTransferLimit, ModConfig.eliteVeinLocatorTier, ModConfig.locatorsUseEnergy);
             itemEliteVeinLocator.setCreativeTab(GTVeinLocator.tabGTVeinLocator);
         }
-    } 
+        itemEliteVeinLocator_IE = new ItemEliteVeinLocato_IE("eliteVeinLocator_IE", ModConfig.eliteVeinLocatorMaxCharge, ModConfig.eliteVeinLocatorTransferLimit, ModConfig.eliteVeinLocatorTier, ModConfig.locatorsUseEnergy);
+        itemEliteVeinLocator_IE.setCreativeTab(GTVeinLocator.tabGTVeinLocator);
+    }
     
 }

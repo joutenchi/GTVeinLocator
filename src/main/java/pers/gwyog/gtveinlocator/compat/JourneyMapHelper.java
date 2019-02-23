@@ -16,11 +16,13 @@ import net.minecraft.client.resources.I18n;
 import pers.gwyog.gtveinlocator.config.ModConfig;
 
 public class JourneyMapHelper {
+
     public static boolean failedCompat = true;
-    
+
     public static void init() {
-        if (!Loader.isModLoaded("journeymap"))
+        if (!Loader.isModLoaded("journeymap")) {
             return;
+        }
         try {
             Class clazzJMapClient = Class.forName("journeymap.client.JourneymapClient");
             Class clazzJMapWaypointStore = Class.forName("journeymap.client.waypoint.WaypointStore");
@@ -34,44 +36,50 @@ public class JourneyMapHelper {
             Method methodSave = clazzJMapWaypointStore.getMethod("save", clazzJMapWaypoint);
             Constructor constuctorWaypoint = clazzJMapWaypoint.getConstructor(String.class, int.class, int.class, int.class, Color.class, clazzJMapWaypointType, Integer.class);
             failedCompat = false;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
-    
+
     @SideOnly(Side.CLIENT)
-    public static boolean isWaypointExist(int posX, int posZ, int dimId, boolean forceAdd) {
+    public static boolean isWaypointExist(int posX, int posZ, int posY, int dimId, boolean forceAdd) {
         WaypointProperties waypointProperties = JourneymapClient.getWaypointProperties();
         Collection<Waypoint> waypoints = WaypointStore.instance().getAll();
         if (forceAdd) {
-            for (Waypoint wp : waypoints)
-                if (wp.getX()==posX && wp.getZ()==posZ && wp.getDimensions().contains(dimId))
-                    if (wp.getName().equals(I18n.format("gtveinlocator.ore.mix.empty")) || wp.getName().equals(I18n.format("gtveinlocator.ore.mix.unknown")))
+            for (Waypoint wp : waypoints) {
+                if (wp.getX() == posX && wp.getZ() == posZ && wp.getY() == posY && wp.getDimensions().contains(dimId)) {
+                    if (wp.getName().equals(I18n.format("gtveinlocator.ore.mix.empty")) || wp.getName().equals(I18n.format("gtveinlocator.ore.mix.unknown"))) {
                         WaypointStore.instance().remove(wp);
-                    else
+                    } else {
                         return true;
-        }
-        else
-            for (Waypoint wp : waypoints)
-                if (wp.getX()==posX && wp.getZ()==posZ && wp.getDimensions().contains(dimId))
+                    }
+                }
+            }
+        } else {
+            for (Waypoint wp : waypoints) {
+                if (wp.getX() == posX && wp.getZ() == posZ && wp.getY() == posY && wp.getDimensions().contains(dimId)) {
                     return true;
+                }
+            }
+        }
         return false;
     }
-    
+
     @SideOnly(Side.CLIENT)
     public static boolean addWaypoint(String name, int posX, int posY, int posZ, int dimId) {
         try {
             Waypoint waypoint = new Waypoint(name, posX, posY, posZ, Color.white, Waypoint.Type.Normal, dimId);
-            int color = ModConfig.waypointColorJourneyMap;       
-            if (color == -1)
-            	waypoint.setRandomColor();
-            else      	
-            	waypoint.setColor(color);
-            WaypointStore.instance().save(waypoint); 
-        }
-        catch (Throwable e) {
+            int color = ModConfig.waypointColorJourneyMap;
+            if (color == -1) {
+                waypoint.setRandomColor();
+            } else {
+                waypoint.setColor(color);
+            }
+            WaypointStore.instance().save(waypoint);
+        } catch (Throwable e) {
             e.printStackTrace();
             return false;
         }
         return true;
     }
-    
+
 }
